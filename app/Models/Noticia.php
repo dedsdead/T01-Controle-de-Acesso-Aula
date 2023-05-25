@@ -1,12 +1,3 @@
-<!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-<!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-
-
-
 <?php
 
 namespace App\Models;
