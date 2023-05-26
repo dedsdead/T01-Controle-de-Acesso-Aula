@@ -7,44 +7,43 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-200">
+
                     @if(Auth::check())
-                    <div style="margin-bottom:2%;">
-                        <button type="button" class="btn btn-outline-primary">
-                            <a href="{{ route('noticias.create') }}">Criar Noticia</a>
-                        </button>
-                    </div>
+                        <a href="{{ route('noticias.create') }}">[ Criar Noticia ]</a>
                     @endif
                     <!--<ul class="list-group">-->
-                        <table class="table">
+                        <table>
                             <thead>
                                 <tr>
-                                <th scope="col">#ID</th>
-                                <th scope="col">Titulo</th>
-                                <th scope="col">Descricao</th>
-                                <th scope="col">ID Usuario</th>
-                                <th scope="col">Acoes</th>
+                                <th>#ID</th>
+                                <th>Titulo</th>
+                                <th>Descricao</th>
+                                <th>ID Usuario</th>
+                                <th>Acoes</th>
                                 </tr>
                             </thead>
 
                             <tbody>    
                                 @foreach($noticias as $noticia)
-                                <tr>
+                                <tr style="margin: right 10px;">
                                 <!--<li class="list-group-item d-flex justify-content-between align-items-center">-->
-                                    <th scope="row"> {{ $noticia->id }} </th>
-                                    <td> {{ $noticia->titulo }} </td>
-                                    <td> {{ $noticia->descricao}} </td>
-                                    <td> {{ $noticia->user_id }} </td>
+                                    <th style="margin: right 10px;"> {{ $noticia->id }} </th>
+                                    <td style="margin-right:5%;"> {{ $noticia->titulo }} </td>
+                                    <td style="margin-right:5%;"> {{ $noticia->descricao}} </td>
+                                    <td style="margin-right:5%;"> {{ $noticia->user_id }} </td>
                                     <td>
 
                                     <div style="display:flex">    
                                     @auth
                                         <!--can('delete', $noticia)-->
-                                            <div style="margin-right:2%;">
+                                            <div style="margin-right:5%;">
                                                 <form method="post" action=" {{ route('noticias.destroy', $noticia->id) }} "
                                                     onsubmit="return confirm('Tem certeza que deseja REMOVER {{ addslashes($noticia->titulo) }}?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-outline-danger">
+                                                    <button>
                                                         Excluir
                                                     </button>
                                                 </form>
@@ -52,16 +51,16 @@
                                         <!--endcan-->
                                         
                                         <!--can('atualizar', $noticia)-->
-                                            <div style="margin-right:2%;">
-                                                <button type="button" class="btn btn-outline-success">
+                                            <div style="margin-right:5%;">
+                                                <button>
                                                     <a href="{{ route('noticias.edit', $noticia->id) }}">Editar</a>
                                                 </button>
                                             </div>
                                         <!--endcan-->
                                         
                                         <!--can('view', $noticia)-->
-                                            <div style="margin-right:2%;">
-                                                <button type="button" class="btn btn-outline-info">
+                                            <div style="margin-right:5%;">
+                                                <button >
                                                     <a href="{{ route('noticias.show', $noticia->id) }}">Visualizar</a>
                                                 </button>
                                             </div>
@@ -76,7 +75,8 @@
                                 
                             </tbody>
                         </table>
-
-        </div>            
+                </div>
+            </div>
+        </div>
     </div>
 </x-app-layout>
