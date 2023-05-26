@@ -16,10 +16,10 @@ class NoticiaController extends Controller
     public function index()
     {
         //echo "[ Index de Noticias ]";
-        return view('viewsNoticias.index');
+        //return view('viewsNoticias.index');
 
-        //$noticias = Noticia::all();
-        //return view('noticias.index', compact('noticias'));
+        $noticias = Noticia::all();
+        return view('viewsNoticias.index', compact('noticias'));
     }
 
     /**
@@ -29,7 +29,7 @@ class NoticiaController extends Controller
      */
     public function create()
     {
-        //
+        echo "Metodo CREATE";
     }
 
     /**
@@ -40,7 +40,7 @@ class NoticiaController extends Controller
      */
     public function store(StoreNoticiaRequest $request)
     {
-        //
+        echo "Metodo STORE";
     }
 
     /**
@@ -51,7 +51,7 @@ class NoticiaController extends Controller
      */
     public function show(Noticia $noticia)
     {
-        //
+        echo "Metodo SHOW";
     }
 
     /**
@@ -62,7 +62,7 @@ class NoticiaController extends Controller
      */
     public function edit(Noticia $noticia)
     {
-        //
+        echo "Metodo EDIT";
     }
 
     /**
@@ -74,7 +74,7 @@ class NoticiaController extends Controller
      */
     public function update(UpdateNoticiaRequest $request, Noticia $noticia)
     {
-        //
+        echo "Metodo UPDATE";
     }
 
     /**
@@ -85,6 +85,6 @@ class NoticiaController extends Controller
      */
     public function destroy(Noticia $noticia)
     {
-        //
+        echo "Metodo DELETE (DESTROY)";
     }
 }
