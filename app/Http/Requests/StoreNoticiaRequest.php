@@ -13,7 +13,11 @@ class StoreNoticiaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        //return false;
+        return true;
+        /**Aqui tambem pode ser aplicado o controle de acesso. Isto e, verifica se o usuario
+         * tem permissao para realizar o Request
+         */
     }
 
     /**

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreNoticiaRequest;
 use App\Http\Requests\UpdateNoticiaRequest;
+use App\Http\Controllers\Requests;
 use App\Models\Noticia;
+use Illuminate\Http\Request;
 
 class NoticiaController extends Controller
 {
@@ -29,7 +31,8 @@ class NoticiaController extends Controller
      */
     public function create()
     {
-        echo "Metodo CREATE";
+        //echo "Metodo CREATE";
+        return view('viewsNoticias.create');
     }
 
     /**
@@ -38,9 +41,23 @@ class NoticiaController extends Controller
      * @param  \App\Http\Requests\StoreNoticiaRequest  $request
      * @return \Illuminate\Http\Response
      */
+    /**Observe que aqui o Request foi personalizado devido a criacao do Model utilizando o --all
+     * Assim, ele verifica se o usuario tem autorizacao para realizar a requisicao no arquivo
+     * StoreNoticiaRequest. Isso tambem vale para o update
+     */
+    //public function store(Request $request)
     public function store(StoreNoticiaRequest $request)
     {
-        echo "Metodo STORE";
+        //echo "Metodo STORE";
+        
+        $novanoticia = new Noticia();
+        $novanoticia->titulo = $request->titulo;
+        $novanoticia->descricao = $request->descricao;
+        $novanoticia->user_id = auth()->user()->id;
+
+        $novanoticia->save();
+
+        return redirect()->route('noticias.index');
     }
 
     /**
@@ -51,7 +68,8 @@ class NoticiaController extends Controller
      */
     public function show(Noticia $noticia)
     {
-        echo "Metodo SHOW";
+        //echo "Metodo SHOW";
+        return view('viewsNoticias.show', compact(['noticia']));
     }
 
     /**
@@ -62,7 +80,8 @@ class NoticiaController extends Controller
      */
     public function edit(Noticia $noticia)
     {
-        echo "Metodo EDIT";
+        //echo "Metodo EDIT";
+        return view('viewsNoticias.edit', compact(['noticia']));
     }
 
     /**
@@ -74,7 +93,12 @@ class NoticiaController extends Controller
      */
     public function update(UpdateNoticiaRequest $request, Noticia $noticia)
     {
-        echo "Metodo UPDATE";
+        //echo "Metodo UPDATE";
+        $noticia->titulo = $request->titulo;   
+        $noticia->descricao = $request->descricao;
+        $noticia->save();
+        
+        return redirect()->route('noticias.index');
     }
 
     /**
@@ -86,5 +110,18 @@ class NoticiaController extends Controller
     public function destroy(Noticia $noticia)
     {
         echo "Metodo DELETE (DESTROY)";
+        /*
+        $noticia = Noticia::find($noticia->id);
+        
+        if(!isset($noticia)){
+            $msg = "Não há [ Noticia ], com identificador [ $noticia->id ], registrada no sistema!";
+            $link = "noticias.index";
+            return view('noticias.erroid', compact(['msg', 'link']));
+        }
+        
+        Noticia::destroy($noticia->id);
+        
+        return redirect()->route('noticias.index');
+        */
     }
 }

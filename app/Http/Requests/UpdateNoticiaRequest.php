@@ -13,7 +13,9 @@ class UpdateNoticiaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
+        /**aqui e a mesma logica do StoreNoticiaRequest */
+        //return false;
     }
 
     /**

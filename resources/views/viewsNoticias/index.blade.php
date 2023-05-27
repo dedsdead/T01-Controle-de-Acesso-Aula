@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Noticias') }}
+            {{ __('Listagem de Noticias') }}
         </h2>
     </x-slot>
 
@@ -40,8 +40,8 @@
                                     @auth
                                         <!--can('delete', $noticia)-->
                                             <div style="margin-right:2%;">
-                                                <form method="post" action=" {{ route('noticias.destroy', $noticia->id) }} "
-                                                    onsubmit="return confirm('Tem certeza que deseja REMOVER {{ addslashes($noticia->titulo) }}?')">
+                                                <form method="post" action="{{ route('noticias.destroy', $noticia) }}" 
+                                                onsubmit="return confirm('Tem certeza que deseja REMOVER {{ addslashes($noticia->titulo) }}?')">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" class="btn btn-outline-danger">
@@ -54,7 +54,7 @@
                                         <!--can('atualizar', $noticia)-->
                                             <div style="margin-right:2%;">
                                                 <button type="button" class="btn btn-outline-success">
-                                                    <a href="{{ route('noticias.edit', $noticia->id) }}">Editar</a>
+                                                    <a href="{{ route('noticias.edit', $noticia) }}">Editar</a>
                                                 </button>
                                             </div>
                                         <!--endcan-->
@@ -62,7 +62,7 @@
                                         <!--can('view', $noticia)-->
                                             <div style="margin-right:2%;">
                                                 <button type="button" class="btn btn-outline-info">
-                                                    <a href="{{ route('noticias.show', $noticia->id) }}">Visualizar</a>
+                                                    <a href="{{ route('noticias.show', $noticia) }}">Visualizar</a>
                                                 </button>
                                             </div>
                                         <!--endcan-->
