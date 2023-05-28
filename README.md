@@ -18,6 +18,8 @@ $ git init
 
 $ git clone https://github.com/diegohoss/T01-Controle-de-Acesso-Aula.git
 
+(fornecer as credenciais: usuário e senha)
+
 
 4) Entre no diretório:
 
