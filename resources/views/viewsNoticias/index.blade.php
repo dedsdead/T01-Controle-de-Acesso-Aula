@@ -40,11 +40,11 @@
                                     @auth
                                         <!--can('delete', $noticia)-->
                                             <div style="margin-right:2%;">
-                                                <form method="post" action="{{ route('noticias.destroy', $noticia) }}" 
-                                                onsubmit="return confirm('Tem certeza que deseja REMOVER {{ addslashes($noticia->titulo) }}?')">
+                                                <form method="post" action=" {{ route('noticias.destroy', $noticia) }} "
+                                                    onsubmit="return confirm('Tem certeza que deseja REMOVER {{ addslashes($noticia->titulo) }}?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-outline-danger">
+                                                    <button class="btn btn-outline-danger">
                                                         Excluir
                                                     </button>
                                                 </form>

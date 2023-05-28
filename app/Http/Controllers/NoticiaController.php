@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class NoticiaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');   
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +23,6 @@ class NoticiaController extends Controller
     public function index()
     {
         //echo "[ Index de Noticias ]";
-        //return view('viewsNoticias.index');
 
         $noticias = Noticia::all();
         return view('viewsNoticias.index', compact('noticias'));
@@ -109,8 +113,8 @@ class NoticiaController extends Controller
      */
     public function destroy(Noticia $noticia)
     {
-        echo "Metodo DELETE (DESTROY)";
-        /*
+        //echo "Metodo DELETE (DESTROY)";
+        
         $noticia = Noticia::find($noticia->id);
         
         if(!isset($noticia)){
@@ -122,6 +126,6 @@ class NoticiaController extends Controller
         Noticia::destroy($noticia->id);
         
         return redirect()->route('noticias.index');
-        */
+        
     }
 }
