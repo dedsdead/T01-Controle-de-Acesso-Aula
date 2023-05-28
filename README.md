@@ -44,7 +44,7 @@ $ npm install
 12) Rode o NPM (é necessário por causa do VITE):
 $ npm run dev
 
-13 Em outra aba do terminal execute o servidor PHP:
+13) Em outra aba do terminal execute o servidor PHP:
 $ php artisan serve
 
 
