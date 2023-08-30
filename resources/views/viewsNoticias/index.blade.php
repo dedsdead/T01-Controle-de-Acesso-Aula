@@ -8,11 +8,15 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     @if(Auth::check())
+                    <!-- can('criar-noticia', 'App\Models\Noticia')-->
+                    @can('create', 'App\Models\Noticia')
                     <div style="margin-bottom:2%;">
                         <button type="button" class="btn btn-outline-primary">
                             <a href="{{ route('noticias.create') }}">Criar Noticia</a>
                         </button>
                     </div>
+                    @endcan
+                    <!-- endcan -->
                     @endif
                     <!--<ul class="list-group">-->
                         <table class="table">
@@ -38,7 +42,8 @@
 
                                     <div style="display:flex">    
                                     @auth
-                                        <!--can('delete', $noticia)-->
+                                        @can('delete', $noticia)
+                                        <!-- can('excluir-noticia', $noticia)-->
                                             <div style="margin-right:2%;">
                                                 <form method="post" action=" {{ route('noticias.destroy', $noticia) }} "
                                                     onsubmit="return confirm('Tem certeza que deseja REMOVER {{ addslashes($noticia->titulo) }}?')">
@@ -49,23 +54,25 @@
                                                     </button>
                                                 </form>
                                             </div>
-                                        <!--endcan-->
+                                        @endcan
                                         
-                                        <!--can('atualizar', $noticia)-->
+                                        @can('update', $noticia)
+                                        <!-- can('editar-noticia', $noticia)-->
                                             <div style="margin-right:2%;">
                                                 <button type="button" class="btn btn-outline-success">
                                                     <a href="{{ route('noticias.edit', $noticia) }}">Editar</a>
                                                 </button>
                                             </div>
-                                        <!--endcan-->
+                                        @endcan
                                         
-                                        <!--can('view', $noticia)-->
+                                        @can('view', $noticia)
+                                        <!--can('visualizar-noticia', $noticia)-->
                                             <div style="margin-right:2%;">
                                                 <button type="button" class="btn btn-outline-info">
                                                     <a href="{{ route('noticias.show', $noticia) }}">Visualizar</a>
                                                 </button>
                                             </div>
-                                        <!--endcan-->
+                                        @endcan
                                     @endauth
                                     </div>
                                     </td>

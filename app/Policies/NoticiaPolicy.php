@@ -18,7 +18,7 @@ class NoticiaPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class NoticiaPolicy
      */
     public function view(User $user, Noticia $noticia)
     {
-        //
+        return $user->id === $noticia->user_id;
     }
 
     /**
@@ -41,7 +41,7 @@ class NoticiaPolicy
      */
     public function create(User $user)
     {
-        //
+        return ($user->admin <= 1);
     }
 
     /**
@@ -53,7 +53,7 @@ class NoticiaPolicy
      */
     public function update(User $user, Noticia $noticia)
     {
-        //
+        return $user->id === $noticia->user_id;
     }
 
     /**
@@ -65,7 +65,7 @@ class NoticiaPolicy
      */
     public function delete(User $user, Noticia $noticia)
     {
-        //
+        return $user->id === $noticia->user_id;
     }
 
     /**
