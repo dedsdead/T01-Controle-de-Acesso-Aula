@@ -7,12 +7,14 @@ use App\Http\Requests\UpdateNoticiaRequest;
 use App\Http\Controllers\Requests;
 use App\Models\Noticia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class NoticiaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');   
+        $this->middleware('auth');  
+        $this->authorizeResource(Noticia::class, 'noticia'); 
     }
     
     /**
@@ -35,6 +37,7 @@ class NoticiaController extends Controller
      */
     public function create()
     {
+        //$this->authorize('criar-noticia', 'App\Models\Noticia');
         //echo "Metodo CREATE";
         return view('viewsNoticias.create');
     }
@@ -52,8 +55,9 @@ class NoticiaController extends Controller
     //public function store(Request $request)
     public function store(StoreNoticiaRequest $request)
     {
+        //$this->authorize('create', 'App\Models\Noticia');
         //echo "Metodo STORE";
-        
+        //$this->authorize('criar-noticia', 'App\Models\Noticia');
         $novanoticia = new Noticia();
         $novanoticia->titulo = $request->titulo;
         $novanoticia->descricao = $request->descricao;
@@ -72,6 +76,8 @@ class NoticiaController extends Controller
      */
     public function show(Noticia $noticia)
     {
+        //$this->authorize('view', $noticia);
+        //$this->authorize('visualizar-noticia', $noticia);
         //echo "Metodo SHOW";
         return view('viewsNoticias.show', compact(['noticia']));
     }
@@ -84,6 +90,8 @@ class NoticiaController extends Controller
      */
     public function edit(Noticia $noticia)
     {
+        //$this->authorize('update', $noticia);
+        //$this->authorize('editar-noticia', $noticia);
         //echo "Metodo EDIT";
         return view('viewsNoticias.edit', compact(['noticia']));
     }
@@ -97,6 +105,8 @@ class NoticiaController extends Controller
      */
     public function update(UpdateNoticiaRequest $request, Noticia $noticia)
     {
+        //$this->authorize('update', $noticia);
+        //$this->authorize('editar-noticia', $noticia);
         //echo "Metodo UPDATE";
         $noticia->titulo = $request->titulo;   
         $noticia->descricao = $request->descricao;
@@ -113,7 +123,12 @@ class NoticiaController extends Controller
      */
     public function destroy(Noticia $noticia)
     {
+        //$this->authorize('delete', $noticia);
         //echo "Metodo DELETE (DESTROY)";
+        //$this->authorize('excluir-noticia', $noticia);
+        /*if(Gate::denies('excluir-noticia', $noticia)){
+            abort(403);
+        }*/
         
         $noticia = Noticia::find($noticia->id);
         
