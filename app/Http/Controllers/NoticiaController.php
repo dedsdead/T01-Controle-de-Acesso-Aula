@@ -12,9 +12,10 @@ class NoticiaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');   
+        $this->middleware('auth');
+        $this->authorizeResource(Noticia::class);
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +24,6 @@ class NoticiaController extends Controller
     public function index()
     {
         //echo "[ Index de Noticias ]";
-
         $noticias = Noticia::all();
         return view('viewsNoticias.index', compact('noticias'));
     }
@@ -53,7 +53,6 @@ class NoticiaController extends Controller
     public function store(StoreNoticiaRequest $request)
     {
         //echo "Metodo STORE";
-        
         $novanoticia = new Noticia();
         $novanoticia->titulo = $request->titulo;
         $novanoticia->descricao = $request->descricao;
@@ -98,10 +97,10 @@ class NoticiaController extends Controller
     public function update(UpdateNoticiaRequest $request, Noticia $noticia)
     {
         //echo "Metodo UPDATE";
-        $noticia->titulo = $request->titulo;   
+        $noticia->titulo = $request->titulo;
         $noticia->descricao = $request->descricao;
         $noticia->save();
-        
+
         return redirect()->route('noticias.index');
     }
 
@@ -114,18 +113,17 @@ class NoticiaController extends Controller
     public function destroy(Noticia $noticia)
     {
         //echo "Metodo DELETE (DESTROY)";
-        
         $noticia = Noticia::find($noticia->id);
-        
+
         if(!isset($noticia)){
             $msg = "Não há [ Noticia ], com identificador [ $noticia->id ], registrada no sistema!";
             $link = "noticias.index";
             return view('noticias.erroid', compact(['msg', 'link']));
         }
-        
+
         Noticia::destroy($noticia->id);
-        
+
         return redirect()->route('noticias.index');
-        
+
     }
 }
