@@ -5,28 +5,24 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use App\Models\Admin;
 
-class UserSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
     static $nomes = [
-        'Douglas',
-        'David',
-        'Danilo'
+        'Diego',
     ];
     static $emails = [
-        'douglas@douglas.com',
-        'david@david.com',
-        'danilo@danilo.com',
+        'diego@diego.com',
     ];
 
     public function run(){
         for ($i = 0; $i < count(self::$nomes); $i++)
-            $user = User::create([
+            $admin = Admin::create([
                 'name' => self::$nomes[$i],
                 'email' => self::$emails[$i],
                 'password' => Hash::make('123456789'),
             ]);
-        $user->save();
+        $admin->save();
     }
 }

@@ -20,13 +20,17 @@
                         {{ __('Noticias') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('roles.index')" :active="request()->routeIs('roles.index')">
-                        {{ __('Papeis') }}
-                    </x-nav-link>
+                    @role('admin', 'admin')
+                        <x-nav-link :href="route('roles.index')" :active="request()->routeIs('roles.index')">
+                            {{ __('Papeis') }}
+                        </x-nav-link>
+                    @endrole
 
-                    <x-nav-link :href="route('usuarios.index')" :active="request()->routeIs('usuarios.index')">
-                        {{ __('Usuarios') }}
-                    </x-nav-link>
+                    @role('admin', 'admin')
+                        <x-nav-link :href="route('usuarios.index')" :active="request()->routeIs('usuarios.index')">
+                            {{ __('Usuarios') }}
+                        </x-nav-link>
+                    @endrole
                 </div>
             </div>
 
