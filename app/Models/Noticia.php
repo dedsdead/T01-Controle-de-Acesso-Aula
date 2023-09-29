@@ -11,6 +11,18 @@ class Noticia extends Model
     use HasFactory;
     use SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'titulo',
+        'descricao',
+        'user_id',
+    ];
+
+
     public const TABELA_NOTICIA = "noticias";
 
     public const CAMPO_DELETED_AT = "deleted_at";

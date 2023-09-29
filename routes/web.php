@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\NoticiaController;
+use App\Models\Noticia;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,5 +24,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::resource('/noticias', NoticiaController::class);
+
+
 
 require __DIR__.'/auth.php';
