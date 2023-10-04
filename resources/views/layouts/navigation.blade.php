@@ -12,23 +12,29 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-
-                    <x-nav-link :href="route('noticias.index')" :active="request()->routeIs('noticias.index')">
-                        {{ __('Noticias') }}
-                    </x-nav-link>
-
                     @role('admin', 'admin')
+                        <x-nav-link :href="url('admin/dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="url('/admin/noticias')" :active="request()->routeIs('noticias.index')">
+                            {{ __('Noticias') }}
+                        </x-nav-link>
+
                         <x-nav-link :href="route('roles.index')" :active="request()->routeIs('roles.index')">
                             {{ __('Papeis') }}
                         </x-nav-link>
-                    @endrole
 
-                    @role('admin', 'admin')
                         <x-nav-link :href="route('usuarios.index')" :active="request()->routeIs('usuarios.index')">
                             {{ __('Usuarios') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="url('/noticias')" :active="request()->routeIs('noticias.index')">
+                            {{ __('Noticias') }}
                         </x-nav-link>
                     @endrole
                 </div>
@@ -51,15 +57,27 @@
 
                     <x-slot name="content">
                         <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
+                        @role('admin', 'admin')
+                            <form method="POST" action="{{ route('admin.logout') }}">
+                                @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
+                                <x-dropdown-link :href="route('admin.logout')"
+                                        onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    {{ __('Admin Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        @else
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <x-dropdown-link :href="route('logout')"
+                                        onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        @endrole
                     </x-slot>
                 </x-dropdown>
             </div>
