@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreNoticiaRequest;
-use App\Http\Requests\UpdateNoticiaRequest;
-use App\Http\Controllers\Requests;
 use App\Models\Noticia;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class NoticiaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');  
-        $this->authorizeResource(Noticia::class, 'noticia'); 
+        $this->middleware('auth');
+        $this->authorizeResource(Noticia::class, 'noticia');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -53,7 +49,7 @@ class NoticiaController extends Controller
      * StoreNoticiaRequest. Isso tambem vale para o update
      */
     //public function store(Request $request)
-    public function store(StoreNoticiaRequest $request)
+    public function store(Request $request)
     {
         //$this->authorize('create', 'App\Models\Noticia');
         //echo "Metodo STORE";
@@ -103,15 +99,15 @@ class NoticiaController extends Controller
      * @param  \App\Models\Noticia  $noticia
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateNoticiaRequest $request, Noticia $noticia)
+    public function update(Request $request, Noticia $noticia)
     {
         //$this->authorize('update', $noticia);
         //$this->authorize('editar-noticia', $noticia);
         //echo "Metodo UPDATE";
-        $noticia->titulo = $request->titulo;   
+        $noticia->titulo = $request->titulo;
         $noticia->descricao = $request->descricao;
         $noticia->save();
-        
+
         return redirect()->route('noticias.index');
     }
 
@@ -129,18 +125,18 @@ class NoticiaController extends Controller
         /*if(Gate::denies('excluir-noticia', $noticia)){
             abort(403);
         }*/
-        
+
         $noticia = Noticia::find($noticia->id);
-        
+
         if(!isset($noticia)){
             $msg = "Não há [ Noticia ], com identificador [ $noticia->id ], registrada no sistema!";
             $link = "noticias.index";
             return view('noticias.erroid', compact(['msg', 'link']));
         }
-        
+
         Noticia::destroy($noticia->id);
-        
+
         return redirect()->route('noticias.index');
-        
+
     }
 }

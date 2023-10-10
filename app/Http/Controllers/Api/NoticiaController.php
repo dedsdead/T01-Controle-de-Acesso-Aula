@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Noticia;
-use PHPUnit\Framework\Error\Notice;
 
 class NoticiaController extends Controller
 {
@@ -16,7 +15,6 @@ class NoticiaController extends Controller
      */
     public function index()
     {
-            
         $noticias = Noticia::all();
         return response()->json($noticias, 200);
 
@@ -31,8 +29,12 @@ class NoticiaController extends Controller
     public function store(Request $request)
     {
         //dd($request->all());
-       $novaNoticia = Noticia::create($request->all());
-       return response()->json($novaNoticia, 201);
+        $user = auth('sanctum')->user();
+        if(!$user->can('create')){
+            return response()->json("Nao autorizado", 401);
+        }
+        $novaNoticia = Noticia::create($request->all());
+        return response()->json($novaNoticia, 201);
     }
 
     /**
@@ -43,6 +45,10 @@ class NoticiaController extends Controller
      */
     public function show(Noticia $noticia)
     {
+        $user = auth('sanctum')->user();
+        if(!$user->can('view', $noticia)){
+            return response()->json("Nao autorizado", 401);
+        }
         $noticia = Noticia::find($noticia->id);
         //if(isset($noticia)){
         return response()->json($noticia, 200);
@@ -63,6 +69,10 @@ class NoticiaController extends Controller
     {
         //dd($noticia);
         //dd($request->all());
+        $user = auth('sanctum')->user();
+        if(!$user->can('update', $noticia)){
+            return response()->json("Nao autorizado", 401);
+        }
         $noticia->titulo = $request->titulo;
         $noticia->descricao = $request->descricao;
         $noticia->save();
@@ -78,6 +88,10 @@ class NoticiaController extends Controller
      */
     public function destroy(Noticia $noticia)
     {
+        $user = auth('sanctum')->user();
+        if(!$user->can('delete', $noticia)){
+            return response()->json("Nao autorizado", 401);
+        }
         Noticia::destroy($noticia->id);
 
         return response()->json("Objeto Excluido", 200);
