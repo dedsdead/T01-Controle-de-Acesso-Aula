@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\NoticiaController;
-use App\Models\Noticia;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +27,26 @@ Route::get('/dashboard', function () {
 
 Route::resource('/noticias', NoticiaController::class);
 
+Route::get('auth/redirect/{provider}', function ($provider) {
+    return Socialite::driver($provider)->redirect();
+})->name('social.login');
 
+Route::get('auth/callback/{provider}', function ($provider) {
+    $providerUser = Socialite::driver($provider)->user();
+
+    $user = User::firstOrCreate([
+            "email" => $providerUser->getEmail()
+        ],[
+            "name" => $providerUser->getName(),
+            "admin" => 0,
+            "provider" => $provider,
+            "provider_id" => $providerUser->getId()
+        ]);
+
+        Auth::login($user);
+
+        return redirect('/dashboard');
+
+    })->name('social.callback');
 
 require __DIR__.'/auth.php';
