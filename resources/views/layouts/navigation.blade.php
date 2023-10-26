@@ -15,7 +15,7 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                
+
                     <x-nav-link :href="route('noticias.index')" :active="request()->routeIs('noticias.index')">
                         {{ __('Noticias') }}
                     </x-nav-link>
@@ -48,6 +48,9 @@
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
+                        <x-dropdown-link :href="route('alterarsenha.edit', Auth::user())" :active="request()->routeIs('alterarsenha.edit')">
+                            {{ __('Alterar Senha') }}
+                        </x-dropdown-link>
                     </x-slot>
                 </x-dropdown>
             </div>

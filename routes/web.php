@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlterarSenhaController;
 use App\Http\Controllers\NoticiaController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,9 @@ Route::get('/dashboard', function () {
 
 Route::resource('/noticias', NoticiaController::class);
 
+Route::get('/alterarsenha/{id}', [AlterarSenhaController::class, 'edit'])->name('alterarsenha.edit');
+Route::put('/alterarsenha/{id}', [AlterarSenhaController::class, 'update'])->name('alterarsenha.update');
+
 Route::get('auth/redirect/{provider}', function ($provider) {
     return Socialite::driver($provider)->redirect();
 })->name('social.login');
@@ -35,18 +39,18 @@ Route::get('auth/callback/{provider}', function ($provider) {
     $providerUser = Socialite::driver($provider)->user();
 
     $user = User::firstOrCreate([
-            "email" => $providerUser->getEmail()
-        ],[
-            "name" => $providerUser->getName(),
-            "admin" => 0,
-            "provider" => $provider,
-            "provider_id" => $providerUser->getId()
-        ]);
+        "email" => $providerUser->getEmail()
+    ],[
+        "name" => $providerUser->getName(),
+        "admin" => 0,
+        "provider" => $provider,
+        "provider_id" => $providerUser->getId()
+    ]);
 
-        Auth::login($user);
+    Auth::login($user);
 
-        return redirect('/dashboard');
+    return redirect('/dashboard');
 
-    })->name('social.callback');
+})->name('social.callback');
 
 require __DIR__.'/auth.php';

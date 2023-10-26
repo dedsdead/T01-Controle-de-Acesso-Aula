@@ -30,7 +30,7 @@ class NoticiaController extends Controller
     {
         //dd($request->all());
         $user = auth('sanctum')->user();
-        if(!$user->can('create')){
+        if(!$user->can('createNoticia')){
             return response()->json("Nao autorizado", 401);
         }
         $novaNoticia = Noticia::create($request->all());
